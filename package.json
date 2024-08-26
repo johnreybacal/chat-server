@@ -1,0 +1,16 @@
+{
+  "name": "chat-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/serve.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "npx tsx --watch serve",
+    "serve": "node ./dist/serve.js"
+  },
+  "author": "Johnrey Bacal",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "^4.7.5"
+  }
+}
