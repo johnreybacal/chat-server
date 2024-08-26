@@ -8,7 +8,8 @@ server.on("connection", (socket) => {
   socket.on("sendMessage", (room: string, message: string) => {
     server.to(room).emit("distributeMessage", room, {
       message,
-      user: socket.id,
+      socketId: socket.id,
+      username: socket.handshake.auth.username,
       date: new Date(),
     });
   });
