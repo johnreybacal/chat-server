@@ -1,7 +1,7 @@
 import { Server } from "socket.io";
 export const server = new Server({
   cors: {
-    origin: ["http://localhost:3000", "https://johnreybacal.github.io/"],
+    origin: ["http://localhost:3000", "https://johnreybacal.github.io:443"],
   },
   connectionStateRecovery: {},
 });
