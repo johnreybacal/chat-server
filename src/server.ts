@@ -33,4 +33,16 @@ server.on("connection", (socket) => {
       ...roomEvent(),
     });
   });
+  socket.on("disconnecting", (reason) => {
+    console.log("disconnect", socket.id, reason);
+
+    for (const room of Array.from(socket.rooms)) {
+      if (room !== socket.id) {
+        server.to(room).emit("roomEvent", room, {
+          type: "userLeft",
+          ...roomEvent(),
+        });
+      }
+    }
+  });
 });
