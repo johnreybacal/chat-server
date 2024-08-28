@@ -9,19 +9,28 @@ export const server = new Server({
 server.on("connection", (socket) => {
   console.log(`connection: ${socket.id} ${socket.handshake.auth.username}`);
 
+  const roomEvent = () => ({
+    socketId: socket.id,
+    username: socket.handshake.auth.username,
+    date: new Date(),
+  });
+
   socket.on("joinRoom", (room: string) => {
     console.log(`joinRoom: ${socket.id} ${room}`);
 
     socket.join(room);
+    server.to(room).emit("roomEvent", room, {
+      type: "userJoined",
+      ...roomEvent(),
+    });
   });
   socket.on("sendMessage", (room: string, message: string) => {
     console.log(`sendMessage: ${socket.id} ${room}`);
 
-    server.to(room).emit("distributeMessage", room, {
+    server.to(room).emit("roomEvent", room, {
+      type: "message",
       message,
-      socketId: socket.id,
-      username: socket.handshake.auth.username,
-      date: new Date(),
+      ...roomEvent(),
     });
   });
 });
